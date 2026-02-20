@@ -134,8 +134,11 @@ header {
 .input-group input {
     width: 100%;
     max-width: 100%;
+    height: 56px;
+    /* 모바일 웹뷰에서 위아래 잘림/짧아짐 방지 고정 높이 */
     box-sizing: border-box;
-    padding: 16px;
+    padding: 0 16px;
+    /* 패딩 높이를 height로 대체하여 렌더링 일관성 확보 */
     border: 1px solid var(--border-color);
     border-radius: 12px;
     font-size: 1.05rem;
