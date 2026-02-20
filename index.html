@@ -75,13 +75,24 @@
             <!-- 하단 버튼 영역 -->
             <section class="action-buttons">
                 <button type="button" class="btn-kakao" id="btn-share">카카오톡으로 결과 공유하기</button>
-                <button type="button" class="btn-secondary" id="btn-retry">다시하기</button>
+                <button type="button" class="btn-secondary" id="btn-retry">광고 보고 다시하기 📺</button>
             </section>
 
             <section class="ad-area" style="margin-top: 16px;">
                 <p class="ad-text">광고 배너 위치 (AdSense)</p>
             </section>
         </main>
+
+        <!-- 광고 시청 모달 (가짜 광고) -->
+        <div id="ad-modal" class="modal hidden">
+            <div class="modal-content">
+                <h3>스폰서 광고 시청 중... 📺</h3>
+                <p>잠시만 기다려주세요! <br>남은 시간: <span id="ad-timer">3</span>초</p>
+                <div class="fake-video-ad">
+                    <p>내일의 행운은?<br>오늘 어때! 🔮</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>

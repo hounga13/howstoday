@@ -64,6 +64,8 @@ const workScoreEl = document.getElementById('work-score');
 
 const btnRetry = document.getElementById('btn-retry');
 const btnShare = document.getElementById('btn-share');
+const adModal = document.getElementById('ad-modal');
+const adTimer = document.getElementById('ad-timer');
 
 // 날짜 포매팅 헬퍼 (예: 20261225)
 function getTodayString() {
@@ -197,16 +199,31 @@ function generateFortune(name, birth) {
     }, 200); // fadeOut 효과 등을 위해 짧은 딜레이
 }
 
-// 다시하기 기능
+// 다시하기 기능 (보상형 광고 시청 시뮬레이션)
 btnRetry.addEventListener('click', () => {
-    window.scrollTo(0, 0);
-    // 화면 전환
-    resultView.classList.remove('active');
-    setTimeout(() => {
-        resultView.classList.add('hidden');
-        mainView.classList.remove('hidden');
-        mainView.classList.add('active');
-    }, 200);
+    // 1. 광고 모달 띄우기
+    adModal.classList.remove('hidden');
+    let timeLeft = 3; // 3초 대기
+    adTimer.innerText = timeLeft;
+
+    const timerInterval = setInterval(() => {
+        timeLeft--;
+        adTimer.innerText = timeLeft;
+
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            // 2. 광고 시청 완료 후 화면 전환
+            adModal.classList.add('hidden');
+
+            window.scrollTo(0, 0);
+            resultView.classList.remove('active');
+            setTimeout(() => {
+                resultView.classList.add('hidden');
+                mainView.classList.remove('hidden');
+                mainView.classList.add('active');
+            }, 200);
+        }
+    }, 1000);
 });
 
 // 공유하기 기능

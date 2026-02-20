@@ -312,3 +312,81 @@ button:active {
     gap: 12px;
     margin-top: auto;
 }
+
+/* Modal for Ads */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(4px);
+    transition: opacity 0.3s ease;
+}
+
+.modal.hidden {
+    opacity: 0;
+    pointer-events: none;
+    /* display: none 을 하지 않고 opacity 로 제어하여 애니메이션 효과 */
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    width: 90%;
+    max-width: 400px;
+    border-radius: 20px;
+    padding: 30px 24px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    transform: translateY(0);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal.hidden .modal-content {
+    transform: translateY(30px);
+}
+
+.modal-content h3 {
+    font-size: 1.3rem;
+    color: var(--text-main);
+    margin-bottom: 12px;
+}
+
+.modal-content p {
+    color: var(--text-sub);
+    font-size: 1rem;
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+.modal-content #ad-timer {
+    font-weight: 800;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+.fake-video-ad {
+    background-color: #343A40;
+    border-radius: 12px;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: 'Jalnan', sans-serif;
+    line-height: 1.6;
+    letter-spacing: 1px;
+    background-image: linear-gradient(45deg, #FF6B6B 0%, #F7323F 100%);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.fake-video-ad p {
+    color: white;
+    font-size: 1.2rem;
+    margin: 0;
+}
