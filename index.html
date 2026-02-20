@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>오늘 어때? - 매일매일 확인하는 내 운세</title>
+    <meta name="description" content="가볍고 재미있게 확인하는 오늘의 운세. 여기어때 패러디, 오늘어때!">
+    <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="stylesheet" href="style.css?v=2">
+</head>
+
+<body>
+    <div id="app">
+        <!-- 메인 화면 -->
+        <main id="main-view" class="view active">
+            <header>
+                <img src="hero_fortune.png" alt="오늘의 운세 일러스트" class="hero-image">
+                <h1 class="logo">오늘 <span>어때?</span></h1>
+                <p class="subtitle">오늘 하루, 내 운세 어때? 🔮</p>
+            </header>
+
+            <section class="card-container">
+                <form id="fortune-form">
+                    <div class="input-group">
+                        <label for="user-name">이름 (애칭)</label>
+                        <input type="text" id="user-name" placeholder="이름을 입력해주세요" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="user-birth">생년월일</label>
+                        <input type="date" id="user-birth" min="1900-01-01" max="2100-12-31" required>
+                    </div>
+                    <button type="submit" class="btn-primary">오늘의 운세 물어보기</button>
+                </form>
+            </section>
+
+            <!-- 광고 영역 -->
+            <section class="ad-area">
+                <p class="ad-text">광고 배너 위치 (AdSense)</p>
+            </section>
+        </main>
+
+        <!-- 결과 화면 (숨김) -->
+        <main id="result-view" class="view hidden">
+            <header>
+                <h1 class="logo" style="font-size: 1.8rem; padding-bottom: 0;">오늘 <span>어때?</span></h1>
+            </header>
+
+            <div class="score-board">
+                <img id="result-featured-image" src="" alt="오늘의 메인 운세" class="featured-image hidden">
+                <h2>오늘의 행운 점수 <span id="total-score">95</span>점!</h2>
+                <p id="total-summary" class="highlight-text">훌륭해✨</p>
+            </div>
+
+            <section class="result-cards">
+                <div class="result-card">
+                    <h3>💰 금전운 <span class="sub-score"><span id="money-score">0</span>점</span></h3>
+                    <p id="money-luck">내용</p>
+                </div>
+                <div class="result-card">
+                    <h3>💖 연애운 <span class="sub-score"><span id="love-score">0</span>점</span></h3>
+                    <p id="love-luck">내용</p>
+                </div>
+                <div class="result-card">
+                    <h3>🤝 대인운 <span class="sub-score"><span id="interpersonal-score">0</span>점</span></h3>
+                    <p id="interpersonal-luck">내용</p>
+                </div>
+                <div class="result-card">
+                    <h3>💼 학업/직장운 <span class="sub-score"><span id="work-score">0</span>점</span></h3>
+                    <p id="work-luck">내용</p>
+                </div>
+            </section>
+
+            <!-- 하단 버튼 영역 -->
+            <section class="action-buttons">
+                <button type="button" class="btn-kakao" id="btn-share">카카오톡으로 결과 공유하기</button>
+                <button type="button" class="btn-secondary" id="btn-retry">다시하기</button>
+            </section>
+
+            <section class="ad-area" style="margin-top: 16px;">
+                <p class="ad-text">광고 배너 위치 (AdSense)</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
