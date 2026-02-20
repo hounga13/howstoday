@@ -133,6 +133,8 @@ header {
 
 .input-group input {
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
     padding: 16px;
     border: 1px solid var(--border-color);
     border-radius: 12px;
@@ -141,6 +143,9 @@ header {
     color: var(--text-main);
     background-color: #FAFAFB;
     transition: all 0.2s ease;
+    -webkit-appearance: none;
+    /* iOS 사파리 기본 스타일 제거 (삐져나감 방지) */
+    appearance: none;
 }
 
 .input-group input:focus {
