@@ -77,8 +77,7 @@ const fortunes = {
     colors: ["토마토 레드 🔴", "스카이 블루 🔵", "레몬 옐로우 🟡", "포레스트 그린 🟢", "피치 핑크 🍑", "미드나잇 퍼플 🟣", "크림 화이트 ☁️", "애플 민트 🌿", "선셋 오렌지 🍊", "매트 블랙 🖤"],
     numbers: ["1", "3", "7", "11", "24", "33", "77", "99", "100", "0"],
     items: ["편의점 아메리카노 ☕", "노이즈캔슬링 이어폰 🎧", "접이식 우산 ☂️", "달달한 초콜릿 🍫", "미니 핸드크림 🧴", "비타민 영양제 💊", "예쁜 포스트잇 📝", "캐릭터 볼펜 🖊️", "새싹 화분 🌵", "포근한 양말 🧦"],
-    lastNames: ["김", "이", "박", "최", "정", "강", "조", "윤", "장", "임", "한", "오", "서", "신", "권", "황", "안", "송", "류", "전"],
-    zodiacs: ["원숭이", "닭", "개", "돼지", "쥐", "소", "호랑이", "토끼", "용", "뱀", "말", "양"]
+    lastNames: ["김", "이", "박", "최", "정", "강", "조", "윤", "장", "임", "한", "오", "서", "신", "권", "황", "안", "송", "류", "전"]
 };
 
 // DOM 요소
@@ -184,14 +183,19 @@ function generateFortune(name, birth) {
     const workIndex = (seed * 11) % fortunes.work.length;
 
     // 점수 생성 (40~100 사이의 난수 생성)
-    const moneyScore = 40 + (seed % 61);
-    const loveScore = 40 + ((seed * 17) % 61);
-    const interpersonalScore = 40 + ((seed * 19) % 61);
-    const workScore = 40 + ((seed * 23) % 61);
+    let moneyScore = 40 + (seed % 61);
+    let loveScore = 40 + ((seed * 17) % 61);
+    let interpersonalScore = 40 + ((seed * 19) % 61);
+    let workScore = 40 + ((seed * 23) % 61);
 
-    // 띠 계산
-    const birthYear = parseInt(birth.split('-')[0], 10);
-    const zodiacStr = fortunes.zodiacs[birthYear % 12] + "띠";
+    // 무조건 기분 좋게 공유할 수 있도록, 최소 한 분야는 특출나게 높게 (90~100점) 보정
+    const maxScoreIndex = seed % 4;
+    const boostScore = 90 + (seed % 11); // 90 ~ 100
+
+    if (maxScoreIndex === 0) moneyScore = Math.max(moneyScore, boostScore);
+    else if (maxScoreIndex === 1) loveScore = Math.max(loveScore, boostScore);
+    else if (maxScoreIndex === 2) interpersonalScore = Math.max(interpersonalScore, boostScore);
+    else if (maxScoreIndex === 3) workScore = Math.max(workScore, boostScore);
 
     // 개인화 데이터 추출
     const memeIndex = seed % fortunes.memes.length;
@@ -201,13 +205,12 @@ function generateFortune(name, birth) {
 
     // 귀인 매칭
     const goodPersonIndex = (seed * 19) % fortunes.lastNames.length;
-    const goodZodiacIndex = (seed * 29) % fortunes.zodiacs.length;
 
-    userTitleEl.innerHTML = `${zodiacStr} ${name}님,<br>오늘의 모드: <span class="highlight-meme">${fortunes.memes[memeIndex]}</span>`;
+    userTitleEl.innerHTML = `${name}님,<br>오늘의 모드: <span class="highlight-meme">${fortunes.memes[memeIndex]}</span>`;
     luckyColorEl.innerText = fortunes.colors[colorIndex];
     luckyNumberEl.innerText = fortunes.numbers[numberIndex];
     luckyItemEl.innerText = fortunes.items[itemIndex];
-    luckyPersonEl.innerText = `'${fortunes.lastNames[goodPersonIndex]}'씨 성을 가진 ${fortunes.zodiacs[goodZodiacIndex]}띠`;
+    luckyPersonEl.innerText = `'${fortunes.lastNames[goodPersonIndex]}'씨 성을 가진 사람`;
 
     // 3. 결과 텍스트 삽입
     const summary = fortunes.summaries[summaryIndex];
