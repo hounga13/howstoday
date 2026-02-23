@@ -77,7 +77,8 @@ const fortunes = {
     colors: ["토마토 레드 🔴", "스카이 블루 🔵", "레몬 옐로우 🟡", "포레스트 그린 🟢", "피치 핑크 🍑", "미드나잇 퍼플 🟣", "크림 화이트 ☁️", "애플 민트 🌿", "선셋 오렌지 🍊", "매트 블랙 🖤"],
     numbers: ["1", "3", "7", "11", "24", "33", "77", "99", "100", "0"],
     items: ["편의점 아메리카노 ☕", "노이즈캔슬링 이어폰 🎧", "접이식 우산 ☂️", "달달한 초콜릿 🍫", "미니 핸드크림 🧴", "비타민 영양제 💊", "예쁜 포스트잇 📝", "캐릭터 볼펜 🖊️", "새싹 화분 🌵", "포근한 양말 🧦"],
-    lastNames: ["김", "이", "박", "최", "정", "강", "조", "윤", "장", "임", "한", "오", "서", "신", "권", "황", "안", "송", "류", "전"]
+    lastNames: ["김", "이", "박", "최", "정", "강", "조", "윤", "장", "임", "한", "오", "서", "신", "권", "황", "안", "송", "류", "전"],
+    mbti: ["ENFP", "ENTP", "INFP", "INTP", "ENFJ", "ENTJ", "INFJ", "INTJ", "ESFP", "ESTP", "ISFP", "ISTP", "ESFJ", "ESTJ", "ISFJ", "ISTJ"]
 };
 
 // DOM 요소
@@ -205,12 +206,13 @@ function generateFortune(name, birth) {
 
     // 귀인 매칭
     const goodPersonIndex = (seed * 19) % fortunes.lastNames.length;
+    const goodMbtiIndex = (seed * 31) % fortunes.mbti.length;
 
     userTitleEl.innerHTML = `${name}님,<br>오늘의 모드: <span class="highlight-meme">${fortunes.memes[memeIndex]}</span>`;
     luckyColorEl.innerText = fortunes.colors[colorIndex];
     luckyNumberEl.innerText = fortunes.numbers[numberIndex];
     luckyItemEl.innerText = fortunes.items[itemIndex];
-    luckyPersonEl.innerText = `'${fortunes.lastNames[goodPersonIndex]}'씨 성을 가진 사람`;
+    luckyPersonEl.innerText = `'${fortunes.lastNames[goodPersonIndex]}'씨 성을 가진 ${fortunes.mbti[goodMbtiIndex]}`;
 
     // 3. 결과 텍스트 삽입
     const summary = fortunes.summaries[summaryIndex];
