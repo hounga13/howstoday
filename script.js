@@ -153,6 +153,13 @@ function hashCode(str) {
     return Math.abs(hash);
 }
 
+// 구글 애널리틱스 이벤트 전송 헬퍼
+function trackGAEvent(eventName, eventParams = {}) {
+    if (typeof gtag === 'function') {
+        gtag('event', eventName, eventParams);
+    }
+}
+
 // 폼 서브밋 이벤트
 form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -296,6 +303,12 @@ function generateFortune(name, birth) {
         resultView.classList.remove('hidden');
         resultView.classList.add('active');
         fireConfetti();
+
+        // 데이터 분석: 운세 결과 시청 성공
+        trackGAEvent('fortune_generated', {
+            'top_luck': topLuck,
+            'total_score': variedScore
+        });
     }, 200); // fadeOut 효과 등을 위해 짧은 딜레이
 }
 
@@ -330,6 +343,9 @@ function fireConfetti() {
 
 // 다시하기 기능 (보상형 광고 시청 시뮬레이션)
 btnRetry.addEventListener('click', () => {
+    // 데이터 분석: 광고 보고 다시하기 클릭
+    trackGAEvent('click_retry_ad');
+
     // 1. 광고 모달 띄우기
     adModal.classList.remove('hidden');
     // 실제 광고로 전환 시 5~15초 사이가 적당함. 모의 광고는 사용자 피로도를 줄이기 위해 5초로 설정.
@@ -358,6 +374,9 @@ btnRetry.addEventListener('click', () => {
 
 // 공유하기 기능
 btnShare.addEventListener('click', () => {
+    // 데이터 분석: 카카오톡/링크 공유 클릭
+    trackGAEvent('click_share');
+
     // 모바일 환경 Web Share API
     if (navigator.share) {
         navigator.share({
@@ -382,6 +401,9 @@ btnShare.addEventListener('click', () => {
 
 // 부적(이미지) 다운로드 기능
 btnDownload.addEventListener('click', () => {
+    // 데이터 분석: 이미지 다운로드 클릭
+    trackGAEvent('click_download_image');
+
     // 1. 다운로드 중임을 알리고 버튼 비활성화
     const originalText = btnDownload.innerText;
     btnDownload.innerText = "캡처 중... 📸";
