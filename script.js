@@ -417,10 +417,15 @@ btnDownload.addEventListener('click', () => {
     adArea.style.display = 'none';
 
     // 3. html2canvas 로 캡처 (result-view 전체)
+    // 기기 화면 비율(DPI)에 맞춰 스케일을 대폭 키워 사파리/아이폰 흐림 현상 방지
+    const pixelRatio = window.devicePixelRatio || 1;
+    const captureScale = Math.max(3, pixelRatio * 2);
+
     html2canvas(resultView, {
-        scale: 2, // 고해상도 캡처
+        scale: captureScale, // 초고해상도 캡처를 통한 폰트 깨짐 방지
         backgroundColor: '#F8F9FA', // 배경색 지정
-        useCORS: true // 외부 이미지가 있을 경우를 위해
+        useCORS: true, // 외부 이미지가 있을 경우를 위해
+        allowTaint: true // 추가적인 렌더링 호환성 옵션
     }).then(canvas => {
         // 원래대로 복구
         actionButtons.style.display = 'flex';
