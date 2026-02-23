@@ -245,6 +245,14 @@ function generateFortune(name, birth) {
         featuredImageEl.classList.add('hidden');
     }
 
+    // 기존 강조 표시 지우고, 가장 높은 운의 카드 전체 강조
+    ['card-money', 'card-love', 'card-interpersonal', 'card-work'].forEach(id => {
+        const cardEl = document.getElementById(id);
+        if (cardEl) cardEl.classList.remove('best-luck-card');
+    });
+    const bestCardEl = document.getElementById(`card-${topLuck}`);
+    if (bestCardEl) bestCardEl.classList.add('best-luck-card');
+
     totalScoreEl.innerText = variedScore;
     totalSummaryEl.innerText = `${name}님, ${summary.text}`;
 
