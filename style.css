@@ -500,3 +500,26 @@ button:active {
     font-size: 1.2rem;
     margin: 0;
 }
+
+/* iOS 사파리 이미지 캡처(.capture-mode) 시 렌더링 버그 방지용 임시 클래스 */
+.capture-mode {
+    padding-bottom: 24px;
+}
+
+.capture-mode .logo {
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+}
+
+.capture-mode .featured-image {
+    /* 사파리 이미지 반쪽 잘림 버그 방지 (외곽선 쉐도우 등 렌더링 꼬임 방지) */
+    object-fit: fill !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+}
+
+.capture-mode .result-card.best-luck-card {
+    /* 사파리에서 transform: scale()이 ::after 절대 위치를 왜곡시키는 것 방지 */
+    transform: none !important;
+}

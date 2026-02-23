@@ -427,12 +427,13 @@ btnDownload.addEventListener('click', () => {
     btnDownload.innerText = "캡처 중... 📸";
     btnDownload.disabled = true;
 
-    // 2. 화면 캡처 시, 아래쪽 버튼과 광고 영역은 보이지 않게 잠시 숨김
+    // 2. 화면 캡처 시, 아래쪽 버튼과 광고 영역은 보이지 않게 잠시 숨김 및 iOS 렌더링 버그용 클래스 추가
     const actionButtons = document.querySelector('.action-buttons');
     const adArea = document.querySelector('#result-view .ad-area');
 
     actionButtons.style.display = 'none';
     adArea.style.display = 'none';
+    resultView.classList.add('capture-mode');
 
     // 3. html-to-image 로 캡처 (result-view 전체)
     // 기기 화면 비율(DPI)에 맞춰 스케일을 대폭 키워 사파리/아이폰 흐림 현상 방지
@@ -449,6 +450,7 @@ btnDownload.addEventListener('click', () => {
         // 원래대로 복구
         actionButtons.style.display = 'flex';
         adArea.style.display = 'block';
+        resultView.classList.remove('capture-mode');
         btnDownload.innerText = originalText;
         btnDownload.disabled = false;
 
@@ -462,6 +464,7 @@ btnDownload.addEventListener('click', () => {
         alert('이미지 저장에 실패했습니다. 다시 시도해주세요.');
         actionButtons.style.display = 'flex';
         adArea.style.display = 'block';
+        resultView.classList.remove('capture-mode');
         btnDownload.innerText = originalText;
         btnDownload.disabled = false;
     });
