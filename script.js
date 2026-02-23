@@ -276,7 +276,7 @@ function generateFortune(name, birth) {
 // Confetti 효과 (폭죽)
 function fireConfetti() {
     if (typeof confetti !== 'undefined') {
-        const duration = 2.5 * 1000;
+        const duration = 1.25 * 1000; // 시간을 절반(1.25초)으로 단축
         const end = Date.now() + duration;
 
         (function frame() {
