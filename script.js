@@ -432,27 +432,27 @@ btnDownload.addEventListener('click', () => {
     actionButtons.style.display = 'none';
     adArea.style.display = 'none';
 
-    // 3. html2canvas 로 캡처 (result-view 전체)
+    // 3. html-to-image 로 캡처 (result-view 전체)
     // 기기 화면 비율(DPI)에 맞춰 스케일을 대폭 키워 사파리/아이폰 흐림 현상 방지
     const pixelRatio = window.devicePixelRatio || 1;
-    const captureScale = Math.max(3, pixelRatio * 2);
+    const captureScale = Math.max(2, pixelRatio);
 
-    html2canvas(resultView, {
-        scale: captureScale, // 초고해상도 캡처를 통한 폰트 깨짐 방지
+    htmlToImage.toPng(resultView, {
+        pixelRatio: captureScale, // 초고해상도 캡처를 통한 폰트 깨짐 방지
         backgroundColor: '#F8F9FA', // 배경색 지정
-        useCORS: true, // 외부 이미지가 있을 경우를 위해
-        allowTaint: true // 추가적인 렌더링 호환성 옵션
-    }).then(canvas => {
+        style: {
+            margin: '0' // iOS 사파리 렌더링 시 일부 여백이 틀어지는 것 방지
+        }
+    }).then(dataUrl => {
         // 원래대로 복구
         actionButtons.style.display = 'flex';
         adArea.style.display = 'block';
         btnDownload.innerText = originalText;
         btnDownload.disabled = false;
 
-        // 4. 생성된 canvas 이미지를 파일로 다운로드
-        const image = canvas.toDataURL("image/png");
+        // 4. 생성된 이미지를 파일로 다운로드
         const link = document.createElement('a');
-        link.href = image;
+        link.href = dataUrl;
         link.download = `오늘어때_운세결과_${getTodayString()}.png`;
         link.click();
     }).catch(err => {
