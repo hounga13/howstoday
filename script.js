@@ -264,19 +264,24 @@ function generateFortune(name, birth) {
     else if (topLuck === 'work') imageUrl = 'img_work_1771556206555.png';
 
     if (imageUrl) {
-        featuredImageEl.src = imageUrl;
+        featuredImageEl.style.backgroundImage = `url(${imageUrl})`;
         featuredImageEl.classList.remove('hidden');
     } else {
         featuredImageEl.classList.add('hidden');
     }
 
-    // 기존 강조 표시 지우고, 가장 높은 운의 카드 전체 강조
-    ['card-money', 'card-love', 'card-interpersonal', 'card-work'].forEach(id => {
-        const cardEl = document.getElementById(id);
+    // 기존 강조 표시 및 배지 초기화 후, 최고 운세에만 적용
+    ['money', 'love', 'interpersonal', 'work'].forEach(type => {
+        const cardEl = document.getElementById(`card-${type}`);
+        const badgeEl = document.getElementById(`badge-${type}`);
         if (cardEl) cardEl.classList.remove('best-luck-card');
+        if (badgeEl) badgeEl.classList.add('hidden');
     });
+
     const bestCardEl = document.getElementById(`card-${topLuck}`);
+    const bestBadgeEl = document.getElementById(`badge-${topLuck}`);
     if (bestCardEl) bestCardEl.classList.add('best-luck-card');
+    if (bestBadgeEl) bestBadgeEl.classList.remove('hidden');
 
     totalScoreEl.innerText = variedScore;
     totalSummaryEl.innerText = `${name}님, ${summary.text}`;
@@ -447,9 +452,9 @@ btnDownload.addEventListener('click', () => {
             margin: '0' // iOS 사파리 렌더링 시 일부 여백이 틀어지는 것 방지
         }
     }).then(dataUrl => {
-        // 원래대로 복구
-        actionButtons.style.display = 'flex';
-        adArea.style.display = 'block';
+        // 원래대로 복구 (빈 문자열 처리하여 CSS 속성에 따르게 함)
+        actionButtons.style.display = '';
+        adArea.style.display = '';
         resultView.classList.remove('capture-mode');
         btnDownload.innerText = originalText;
         btnDownload.disabled = false;
@@ -462,8 +467,8 @@ btnDownload.addEventListener('click', () => {
     }).catch(err => {
         console.error('캡처 실패:', err);
         alert('이미지 저장에 실패했습니다. 다시 시도해주세요.');
-        actionButtons.style.display = 'flex';
-        adArea.style.display = 'block';
+        actionButtons.style.display = '';
+        adArea.style.display = '';
         resultView.classList.remove('capture-mode');
         btnDownload.innerText = originalText;
         btnDownload.disabled = false;

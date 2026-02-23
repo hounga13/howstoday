@@ -275,11 +275,13 @@ button:active {
 .featured-image {
     width: 120px;
     height: 120px;
-    object-fit: contain;
-    margin-bottom: 20px;
+    margin: 0 auto 20px auto;
     border-radius: 20px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
-    display: inline-block;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
 }
 
 .featured-image.hidden {
@@ -335,11 +337,7 @@ button:active {
     transform: scale(1.02) translateX(4px);
 }
 
-.result-card.best-luck-card::after {
-    content: '👑 Best!';
-    position: absolute;
-    top: -12px;
-    right: 16px;
+.badge-best {
     background-color: var(--primary-color);
     color: white;
     font-family: 'Jalnan', sans-serif;
@@ -348,6 +346,12 @@ button:active {
     border-radius: 20px;
     box-shadow: 0 4px 8px rgba(247, 50, 63, 0.3);
     letter-spacing: 0.5px;
+    margin-left: auto;
+    margin-right: 12px;
+}
+
+.badge-best.hidden {
+    display: none;
 }
 
 .result-card h3 {
@@ -511,15 +515,7 @@ button:active {
     word-break: keep-all !important;
 }
 
-.capture-mode .featured-image {
-    /* 사파리 이미지 반쪽 잘림 버그 방지 (외곽선 쉐도우 등 렌더링 꼬임 방지) */
-    object-fit: fill !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    background-color: transparent !important;
-}
-
 .capture-mode .result-card.best-luck-card {
-    /* 사파리에서 transform: scale()이 ::after 절대 위치를 왜곡시키는 것 방지 */
+    /* 사파리 스케일 오차 방지 */
     transform: none !important;
 }
