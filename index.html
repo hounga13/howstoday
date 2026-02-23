@@ -19,7 +19,7 @@
     <meta name="twitter:image" content="og_thumbnail.png">
     <link rel="stylesheet" as="style" crossorigin
         href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <link rel="stylesheet" href="style.css?v=6">
+    <link rel="stylesheet" href="style.css?v=7">
 </head>
 
 <body>
@@ -97,7 +97,8 @@
 
             <!-- 하단 버튼 영역 -->
             <section class="action-buttons">
-                <button type="button" class="btn-kakao" id="btn-share">카카오톡으로 결과 공유하기</button>
+                <button type="button" class="btn-dark" id="btn-download">이미지로 결과 저장하기 📸</button>
+                <button type="button" class="btn-kakao" id="btn-share" style="margin-top: 12px;">카카오톡으로 결과 공유하기</button>
                 <button type="button" class="btn-secondary" id="btn-retry">광고 보고 다시하기 📺</button>
             </section>
 
@@ -120,6 +121,8 @@
 
     <!-- 폭죽 효과를 위한 canvas-confetti 라이브러리 -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- 이미지 캡처용 html2canvas 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script src="script.js"></script>
 </body>
 

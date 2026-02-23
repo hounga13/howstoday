@@ -129,6 +129,7 @@ const workScoreEl = document.getElementById('work-score');
 
 const btnRetry = document.getElementById('btn-retry');
 const btnShare = document.getElementById('btn-share');
+const btnDownload = document.getElementById('btn-download');
 const adModal = document.getElementById('ad-modal');
 const adTimer = document.getElementById('ad-timer');
 
@@ -377,4 +378,46 @@ btnShare.addEventListener('click', () => {
         document.body.removeChild(dummy);
         alert('운세 결과가 클립보드에 복사되었습니다! 카톡으로 친구에게 붙여넣기 해보세요.');
     }
+});
+
+// 부적(이미지) 다운로드 기능
+btnDownload.addEventListener('click', () => {
+    // 1. 다운로드 중임을 알리고 버튼 비활성화
+    const originalText = btnDownload.innerText;
+    btnDownload.innerText = "캡처 중... 📸";
+    btnDownload.disabled = true;
+
+    // 2. 화면 캡처 시, 아래쪽 버튼과 광고 영역은 보이지 않게 잠시 숨김
+    const actionButtons = document.querySelector('.action-buttons');
+    const adArea = document.querySelector('#result-view .ad-area');
+
+    actionButtons.style.display = 'none';
+    adArea.style.display = 'none';
+
+    // 3. html2canvas 로 캡처 (result-view 전체)
+    html2canvas(resultView, {
+        scale: 2, // 고해상도 캡처
+        backgroundColor: '#F8F9FA', // 배경색 지정
+        useCORS: true // 외부 이미지가 있을 경우를 위해
+    }).then(canvas => {
+        // 원래대로 복구
+        actionButtons.style.display = 'flex';
+        adArea.style.display = 'block';
+        btnDownload.innerText = originalText;
+        btnDownload.disabled = false;
+
+        // 4. 생성된 canvas 이미지를 파일로 다운로드
+        const image = canvas.toDataURL("image/png");
+        const link = document.createElement('a');
+        link.href = image;
+        link.download = `오늘어때_운세결과_${getTodayString()}.png`;
+        link.click();
+    }).catch(err => {
+        console.error('캡처 실패:', err);
+        alert('이미지 저장에 실패했습니다. 다시 시도해주세요.');
+        actionButtons.style.display = 'flex';
+        adArea.style.display = 'block';
+        btnDownload.innerText = originalText;
+        btnDownload.disabled = false;
+    });
 });

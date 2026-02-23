@@ -205,6 +205,24 @@ button:active {
     background-color: #E9ECEF;
 }
 
+.btn-dark {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    font-family: 'Jalnan', sans-serif;
+    cursor: pointer;
+    background-color: #212529;
+    color: white;
+    transition: all 0.2s ease;
+}
+
+.btn-dark:hover {
+    background-color: #343A40;
+}
+
 /* Ad Area */
 .ad-area {
     width: 100%;
