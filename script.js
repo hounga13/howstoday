@@ -377,25 +377,41 @@ btnShare.addEventListener('click', () => {
     // 데이터 분석: 카카오톡/링크 공유 클릭
     trackGAEvent('click_share');
 
+    // 공유할 내용을 풍성하게 구성
+    const userName = nameInput.value.trim();
+    const rankScore = totalScoreEl.innerText;
+
+    // .highlight-meme의 내용만 가져옴
+    const memeName = document.querySelector('.highlight-meme').innerText;
+    const bestLuckTitle = document.querySelector('.best-luck-card h3').innerText.split(' ')[1]; // "선두 아이콘" 제거하고 "금전운" 등 텍스트만 추출
+    const bestLuckScore = document.querySelector('.best-luck-card .sub-score span').innerText;
+
+    const luckyColor = luckyColorEl.innerText;
+    const luckyPersona = luckyPersonEl.innerText;
+
+    const shareTitle = `🔮 오늘 어때? - ${userName}님의 운세`;
+    const shareText = `[나의 오늘 모드: ${memeName}]\n\n✨ 오늘의 행운 점수: ${rankScore}점!\n🏆 최고 운세: ${bestLuckTitle} (${bestLuckScore}점)\n\n🎨 럭키 컬러: ${luckyColor}\n🤝 행운의 귀인: ${luckyPersona}\n\n👇 내일은 어떨까? 친구 운세도 확인해봐!`;
+    const shareUrl = window.location.href;
+
     // 모바일 환경 Web Share API
     if (navigator.share) {
         navigator.share({
-            title: '오늘 어때? - 나의 행운 점수 확인',
-            text: `[오늘 어때?] 내 오늘의 행운 점수는 ${totalScoreEl.innerText}점! 너도 확인해봐 🔮`,
-            url: window.location.href, // 배포 후 실제 url
+            title: shareTitle,
+            text: shareText,
+            url: shareUrl,
         })
             .then(() => console.log('공유 성공'))
             .catch((error) => console.log('공유 실패', error));
     } else {
         // PC 등 미지원 환경에서는 클립보드 복사
         const dummy = document.createElement('textarea');
-        const text = `[오늘 어때?]\n내 오늘의 행운 점수는 ${totalScoreEl.innerText}점이야!\n\n확인하러 가기: ${window.location.href}`;
+        const text = `${shareTitle}\n\n${shareText}\n${shareUrl}`;
         document.body.appendChild(dummy);
         dummy.value = text;
         dummy.select();
         document.execCommand('copy');
         document.body.removeChild(dummy);
-        alert('운세 결과가 클립보드에 복사되었습니다! 카톡으로 친구에게 붙여넣기 해보세요.');
+        alert('✨ 나만의 맞춤 운세 텍스트가 복사되었습니다! 카카오톡에 붙여넣기 해보세요.');
     }
 });
 
