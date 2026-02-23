@@ -383,7 +383,9 @@ btnShare.addEventListener('click', () => {
 
     // .highlight-meme의 내용만 가져옴
     const memeName = document.querySelector('.highlight-meme').innerText;
-    const bestLuckTitle = document.querySelector('.best-luck-card h3').innerText.split(' ')[1]; // "선두 아이콘" 제거하고 "금전운" 등 텍스트만 추출
+    // float: right 속성 때문에 innerText에 줄바꿈이 생기는 것을 방지
+    const bestLuckHeader = document.querySelector('.best-luck-card h3');
+    const bestLuckTitle = bestLuckHeader.childNodes[0].textContent.trim().split(' ')[1];
     const bestLuckScore = document.querySelector('.best-luck-card .sub-score span').innerText;
 
     const luckyColor = luckyColorEl.innerText;
