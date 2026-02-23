@@ -66,7 +66,19 @@ const fortunes = {
         "집중력이 조금 흩어질 수 있으니, 작은 목표를 세우고 하나씩 체크하며 해결하세요.",
         "오늘은 쓸데없는 야근이나 보충을 피하고, 정시에 끝내 휴식을 취하는 게 이득입니다.",
         "실수가 발생할 수 있으니 제출하기 전에 한 번 더 꼼꼼히 검토하는 습관을 지키세요."
-    ]
+    ],
+    memes: [
+        "자본주의 괴물 💰", "맑은 눈의 광인 👀", "무념무상 은둔자 🍵", "열정 만수르 🔥",
+        "소신파 불도저 🚀", "파워 생존주의자 ⛺", "프로 귀차니스트 🦥", "감성 끝판왕 🌸",
+        "인간 비타민 🍋", "프로 소비러 🛍️", "아마추어 철학자 🧐", "강철 멘탈 소유자 🛡️",
+        "프로 걱정러 😟", "행복 회로 풀가동 🌈", "방구석 예술가 🎨", "도파민 중독자 🎮",
+        "갓생러 도전중 💪", "알뜰살뜰 요정 🧚", "마이웨이 독불장군 🦄", "프로 오지라퍼 🦸"
+    ],
+    colors: ["토마토 레드 🔴", "스카이 블루 🔵", "레몬 옐로우 🟡", "포레스트 그린 🟢", "피치 핑크 🍑", "미드나잇 퍼플 🟣", "크림 화이트 ☁️", "애플 민트 🌿", "선셋 오렌지 🍊", "매트 블랙 🖤"],
+    numbers: ["1", "3", "7", "11", "24", "33", "77", "99", "100", "0"],
+    items: ["편의점 아메리카노 ☕", "노이즈캔슬링 이어폰 🎧", "접이식 우산 ☂️", "달달한 초콜릿 🍫", "미니 핸드크림 🧴", "비타민 영양제 💊", "예쁜 포스트잇 📝", "캐릭터 볼펜 🖊️", "새싹 화분 🌵", "포근한 양말 🧦"],
+    lastNames: ["김", "이", "박", "최", "정", "강", "조", "윤", "장", "임", "한", "오", "서", "신", "권", "황", "안", "송", "류", "전"],
+    zodiacs: ["원숭이", "닭", "개", "돼지", "쥐", "소", "호랑이", "토끼", "용", "뱀", "말", "양"]
 };
 
 // DOM 요소
@@ -75,6 +87,12 @@ const nameInput = document.getElementById('user-name');
 const birthInput = document.getElementById('user-birth');
 const mainView = document.getElementById('main-view');
 const resultView = document.getElementById('result-view');
+
+const userTitleEl = document.getElementById('user-title');
+const luckyColorEl = document.getElementById('lucky-color');
+const luckyNumberEl = document.getElementById('lucky-number');
+const luckyItemEl = document.getElementById('lucky-item');
+const luckyPersonEl = document.getElementById('lucky-person');
 
 const totalScoreEl = document.getElementById('total-score');
 const totalSummaryEl = document.getElementById('total-summary');
@@ -171,6 +189,26 @@ function generateFortune(name, birth) {
     const interpersonalScore = 40 + ((seed * 19) % 61);
     const workScore = 40 + ((seed * 23) % 61);
 
+    // 띠 계산
+    const birthYear = parseInt(birth.split('-')[0], 10);
+    const zodiacStr = fortunes.zodiacs[birthYear % 12] + "띠";
+
+    // 개인화 데이터 추출
+    const memeIndex = seed % fortunes.memes.length;
+    const colorIndex = (seed * 5) % fortunes.colors.length;
+    const numberIndex = (seed * 11) % fortunes.numbers.length;
+    const itemIndex = (seed * 17) % fortunes.items.length;
+
+    // 귀인 매칭
+    const goodPersonIndex = (seed * 19) % fortunes.lastNames.length;
+    const goodZodiacIndex = (seed * 29) % fortunes.zodiacs.length;
+
+    userTitleEl.innerHTML = `${zodiacStr} ${name}님,<br>오늘의 모드: <span class="highlight-meme">${fortunes.memes[memeIndex]}</span>`;
+    luckyColorEl.innerText = fortunes.colors[colorIndex];
+    luckyNumberEl.innerText = fortunes.numbers[numberIndex];
+    luckyItemEl.innerText = fortunes.items[itemIndex];
+    luckyPersonEl.innerText = `'${fortunes.lastNames[goodPersonIndex]}'씨 성을 가진 ${fortunes.zodiacs[goodZodiacIndex]}띠`;
+
     // 3. 결과 텍스트 삽입
     const summary = fortunes.summaries[summaryIndex];
     // 총운 점수는 약간의 변동을 줌
@@ -226,7 +264,37 @@ function generateFortune(name, birth) {
         mainView.classList.add('hidden');
         resultView.classList.remove('hidden');
         resultView.classList.add('active');
+        fireConfetti();
     }, 200); // fadeOut 효과 등을 위해 짧은 딜레이
+}
+
+// Confetti 효과 (폭죽)
+function fireConfetti() {
+    if (typeof confetti !== 'undefined') {
+        const duration = 2.5 * 1000;
+        const end = Date.now() + duration;
+
+        (function frame() {
+            confetti({
+                particleCount: 5,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0 },
+                colors: ['#F7323F', '#FEE500', '#212529', '#E9ECEF']
+            });
+            confetti({
+                particleCount: 5,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1 },
+                colors: ['#F7323F', '#FEE500', '#212529', '#E9ECEF']
+            });
+
+            if (Date.now() < end) {
+                requestAnimationFrame(frame);
+            }
+        }());
+    }
 }
 
 // 다시하기 기능 (보상형 광고 시청 시뮬레이션)

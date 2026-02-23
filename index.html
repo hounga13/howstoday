@@ -19,7 +19,7 @@
     <meta name="twitter:image" content="og_thumbnail.png">
     <link rel="stylesheet" as="style" crossorigin
         href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <link rel="stylesheet" href="style.css?v=4">
+    <link rel="stylesheet" href="style.css?v=5">
 </head>
 
 <body>
@@ -59,12 +59,23 @@
             </header>
 
             <div class="score-board">
+                <h3 id="user-title" class="user-title">용띠 유저님,<br>오늘의 모드: <span class="highlight-meme">로딩중</span></h3>
                 <img id="result-featured-image" src="" alt="오늘의 메인 운세" class="featured-image hidden">
                 <h2>오늘의 행운 점수 <span id="total-score">95</span>점!</h2>
                 <p id="total-summary" class="highlight-text">훌륭해✨</p>
             </div>
 
             <section class="result-cards">
+                <!-- 초개인화 아이템 카드 -->
+                <div class="result-card luck-items-card">
+                    <h3>🍀 오늘의 행운 처방전</h3>
+                    <ul class="luck-items-list">
+                        <li><span>🎨 럭키 컬러</span> <strong id="lucky-color">-</strong></li>
+                        <li><span>🔢 행운의 숫자</span> <strong id="lucky-number">-</strong></li>
+                        <li><span>☕ 행운 아이템</span> <strong id="lucky-item">-</strong></li>
+                        <li><span>🤝 귀인/상극</span> <strong id="lucky-person">-</strong></li>
+                    </ul>
+                </div>
                 <div class="result-card">
                     <h3>💰 금전운 <span class="sub-score"><span id="money-score">0</span>점</span></h3>
                     <p id="money-luck">내용</p>
@@ -106,6 +117,8 @@
         </div>
     </div>
 
+    <!-- 폭죽 효과를 위한 canvas-confetti 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="script.js"></script>
 </body>
 

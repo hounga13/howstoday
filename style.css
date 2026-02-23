@@ -228,6 +228,25 @@ button:active {
     margin-top: 0;
 }
 
+.user-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    line-height: 1.4;
+    color: var(--text-main);
+    background-color: #F8F9FA;
+    padding: 12px;
+    border-radius: 12px;
+}
+
+.highlight-meme {
+    display: inline-block;
+    color: var(--primary-color);
+    font-family: 'Jalnan', sans-serif;
+    font-size: 1.4rem;
+    margin-top: 6px;
+}
+
 .score-board h2 {
     font-size: 1.6rem;
     margin-bottom: 12px;
@@ -291,6 +310,41 @@ button:active {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+/* Luck Items specific */
+.luck-items-card {
+    background: linear-gradient(135deg, #FFFBEC 0%, #FFFFFF 100%);
+    border-left: 6px solid #FFD43B;
+}
+
+.luck-items-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.luck-items-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--border-color);
+    font-size: 0.95rem;
+}
+
+.luck-items-list li:last-child {
+    border-bottom: none;
+}
+
+.luck-items-list span {
+    color: var(--text-sub);
+    font-weight: 600;
+}
+
+.luck-items-list strong {
+    color: var(--text-main);
+    font-weight: 800;
 }
 
 .sub-score {
