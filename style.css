@@ -506,6 +506,15 @@ button:active {
 /* iOS 사파리 이미지 캡처(.capture-mode) 시 렌더링 버그 방지용 임시 클래스 */
 .capture-mode {
     padding-bottom: 24px;
+    background-color: #F8F9FA !important;
+    /* 투명도 버그 방지를 위한 강제 배경색 지정 */
+}
+
+/* 캡처 시 애니메이션 및 GPU 가속 트랜지션 무효화 (사파리 흐림/탈색 버그 방지) */
+.capture-mode,
+.capture-mode * {
+    animation: none !important;
+    transition: none !important;
 }
 
 .capture-mode .logo {

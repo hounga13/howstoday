@@ -445,32 +445,36 @@ btnDownload.addEventListener('click', () => {
     const pixelRatio = window.devicePixelRatio || 1;
     const captureScale = Math.min(pixelRatio, 2);
 
-    html2canvas(document.querySelector('#result-view'), {
-        scale: captureScale,
-        backgroundColor: '#F8F9FA',
-        useCORS: true,
-        allowTaint: true
-    }).then(canvas => {
-        // 원래대로 복구 
-        actionButtons.style.display = '';
-        adArea.style.display = '';
-        resultView.classList.remove('capture-mode');
-        btnDownload.innerText = originalText;
-        btnDownload.disabled = false;
+    // 사파리가 CSS 변경사항(.capture-mode의 배경색 지정 및 애니메이션/트랜지션 중단)을
+    // 인터폴레이션 도중에 캡처해서 투명하게 날려먹는 것을 방지하기 위해 프레임 리도잉 대기(100ms)
+    setTimeout(() => {
+        html2canvas(document.querySelector('#result-view'), {
+            scale: captureScale,
+            backgroundColor: '#F8F9FA',
+            useCORS: true,
+            allowTaint: true
+        }).then(canvas => {
+            // 원래대로 복구 
+            actionButtons.style.display = '';
+            adArea.style.display = '';
+            resultView.classList.remove('capture-mode');
+            btnDownload.innerText = originalText;
+            btnDownload.disabled = false;
 
-        // 4. 생성된 캔버스를 이미지 파일로 다운로드
-        const image = canvas.toDataURL("image/png");
-        const link = document.createElement('a');
-        link.href = image;
-        link.download = `오늘어때_운세결과_${getTodayString()}.png`;
-        link.click();
-    }).catch(err => {
-        console.error('캡처 실패:', err);
-        alert('이미지 저장에 실패했습니다. 다시 시도해주세요.');
-        actionButtons.style.display = '';
-        adArea.style.display = '';
-        resultView.classList.remove('capture-mode');
-        btnDownload.innerText = originalText;
-        btnDownload.disabled = false;
-    });
+            // 4. 생성된 캔버스를 이미지 파일로 다운로드
+            const image = canvas.toDataURL("image/png");
+            const link = document.createElement('a');
+            link.href = image;
+            link.download = `오늘어때_운세결과_${getTodayString()}.png`;
+            link.click();
+        }).catch(err => {
+            console.error('캡처 실패:', err);
+            alert('이미지 저장에 실패했습니다. 다시 시도해주세요.');
+            actionButtons.style.display = '';
+            adArea.style.display = '';
+            resultView.classList.remove('capture-mode');
+            btnDownload.innerText = originalText;
+            btnDownload.disabled = false;
+        });
+    }, 150);
 });
