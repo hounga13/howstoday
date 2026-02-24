@@ -275,13 +275,11 @@ button:active {
 .featured-image {
     width: 120px;
     height: 120px;
-    margin: 0 auto 20px auto;
+    object-fit: contain;
+    margin-bottom: 20px;
     border-radius: 20px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: transparent;
+    display: inline-block;
 }
 
 .featured-image.hidden {

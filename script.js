@@ -264,8 +264,22 @@ function generateFortune(name, birth) {
     else if (topLuck === 'work') imageUrl = 'img_work_1771556206555.png';
 
     if (imageUrl) {
-        featuredImageEl.style.backgroundImage = `url(${imageUrl})`;
-        featuredImageEl.classList.remove('hidden');
+        // iOS Safari 렌더링(보안/CORS) 버그 우회: 이미지를 미리 Base64로 가져와서 <img> 태그에 완전히 박아넣기
+        fetch(imageUrl)
+            .then(res => res.blob())
+            .then(blob => {
+                const reader = new FileReader();
+                reader.onloadend = function () {
+                    featuredImageEl.src = reader.result;
+                    featuredImageEl.classList.remove('hidden');
+                }
+                reader.readAsDataURL(blob);
+            })
+            .catch(err => {
+                console.warn('이미지 로딩 실패', err);
+                featuredImageEl.src = imageUrl;
+                featuredImageEl.classList.remove('hidden');
+            });
     } else {
         featuredImageEl.classList.add('hidden');
     }
