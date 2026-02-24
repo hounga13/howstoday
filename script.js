@@ -264,22 +264,8 @@ function generateFortune(name, birth) {
     else if (topLuck === 'work') imageUrl = 'img_work_1771556206555.png';
 
     if (imageUrl) {
-        // iOS Safari 렌더링(보안/CORS) 버그 우회: 이미지를 미리 Base64로 가져와서 <img> 태그에 완전히 박아넣기
-        fetch(imageUrl)
-            .then(res => res.blob())
-            .then(blob => {
-                const reader = new FileReader();
-                reader.onloadend = function () {
-                    featuredImageEl.src = reader.result;
-                    featuredImageEl.classList.remove('hidden');
-                }
-                reader.readAsDataURL(blob);
-            })
-            .catch(err => {
-                console.warn('이미지 로딩 실패', err);
-                featuredImageEl.src = imageUrl;
-                featuredImageEl.classList.remove('hidden');
-            });
+        featuredImageEl.src = imageUrl;
+        featuredImageEl.classList.remove('hidden');
     } else {
         featuredImageEl.classList.add('hidden');
     }
@@ -454,28 +440,28 @@ btnDownload.addEventListener('click', () => {
     adArea.style.display = 'none';
     resultView.classList.add('capture-mode');
 
-    // 3. html-to-image 로 캡처 (result-view 전체)
-    // 기기 화면 비율(DPI)에 맞춰 스케일을 대폭 키워 사파리/아이폰 흐림 현상 방지
+    // 3. html2canvas로 캡처
+    // ⚠️ 핵심: iOS 사파리 메모리 한계(canvas area 초과 시 깨짐 현상)를 방지하기 위해 최대 2배수로 scale 제한
     const pixelRatio = window.devicePixelRatio || 1;
-    const captureScale = Math.max(2, pixelRatio);
+    const captureScale = Math.min(pixelRatio, 2);
 
-    htmlToImage.toPng(resultView, {
-        pixelRatio: captureScale, // 초고해상도 캡처를 통한 폰트 깨짐 방지
-        backgroundColor: '#F8F9FA', // 배경색 지정
-        style: {
-            margin: '0' // iOS 사파리 렌더링 시 일부 여백이 틀어지는 것 방지
-        }
-    }).then(dataUrl => {
-        // 원래대로 복구 (빈 문자열 처리하여 CSS 속성에 따르게 함)
+    html2canvas(document.querySelector('#result-view'), {
+        scale: captureScale,
+        backgroundColor: '#F8F9FA',
+        useCORS: true,
+        allowTaint: true
+    }).then(canvas => {
+        // 원래대로 복구 
         actionButtons.style.display = '';
         adArea.style.display = '';
         resultView.classList.remove('capture-mode');
         btnDownload.innerText = originalText;
         btnDownload.disabled = false;
 
-        // 4. 생성된 이미지를 파일로 다운로드
+        // 4. 생성된 캔버스를 이미지 파일로 다운로드
+        const image = canvas.toDataURL("image/png");
         const link = document.createElement('a');
-        link.href = dataUrl;
+        link.href = image;
         link.download = `오늘어때_운세결과_${getTodayString()}.png`;
         link.click();
     }).catch(err => {
