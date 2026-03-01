@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://hounga13.github.io/howstoday/sitemap.xml
