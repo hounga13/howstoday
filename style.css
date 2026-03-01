@@ -527,3 +527,45 @@ button:active {
     /* 사파리 스케일 오차 방지 */
     transform: none !important;
 }
+
+/* SEO Content Styling for AdSense Approval */
+.seo-article {
+    width: 100%;
+    max-width: 480px;
+    margin: 40px auto;
+    padding: 0 24px;
+    color: #6c757d;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+.seo-article h2 {
+    font-size: 1rem;
+    color: #495057;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 8px;
+}
+
+.seo-article h3 {
+    font-size: 0.9rem;
+    color: #495057;
+    margin-top: 20px;
+    margin-bottom: 8px;
+}
+
+.seo-article p {
+    margin-bottom: 12px;
+}
+
+.seo-article strong {
+    color: #343a40;
+}
+
+.seo-footer-note {
+    margin-top: 24px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #adb5bd;
+}
